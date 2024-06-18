@@ -638,7 +638,9 @@ const renderProviderDetails = () => {
   providersDiv.innerHTML = '';
   providerDetails.forEach((providerDetail) => {
     const { info, provider: provider_ } = providerDetail;
-
+    // if (info.name !== 'MetaMask') {
+    //   return;
+    // }
     const content = JSON.stringify(
       {
         info,
@@ -664,6 +666,9 @@ const renderProviderDetails = () => {
       setActiveProviderDetail(providerDetail);
     };
     eip6963Provider.appendChild(button);
+    // setTimeout(() => {
+    //   setActiveProviderDetail(providerDetail);
+    // }, 1500);
   });
 };
 
@@ -2429,55 +2434,35 @@ const initializeFormElements = () => {
    */
   signTypedDataV4.onclick = async () => {
     const msgParams = {
-      domain: {
-        chainId: chainIdInt.toString(),
-        name: 'Ether Mail',
-        verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
-        version: '1',
-      },
-      message: {
-        contents: 'Hello, Bob!',
-        from: {
-          name: 'Cow',
-          wallets: [
-            '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
-            '0xDeaDbeefdEAdbeefdEadbEEFdeadbeEFdEaDbeeF',
-          ],
-        },
-        to: [
-          {
-            name: 'Bob',
-            wallets: [
-              '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
-              '0xB0BdaBea57B0BDABeA57b0bdABEA57b0BDabEa57',
-              '0xB0B0b0b0b0b0B000000000000000000000000000',
-            ],
-          },
-        ],
-        attachment: '0x',
-      },
-      primaryType: 'Mail',
       types: {
+        Permit: [
+          { name: 'owner', type: 'address' },
+          { name: 'spender', type: 'address' },
+          { name: 'value', type: 'uint256' },
+          { name: 'nonce', type: 'uint256' },
+          { name: 'deadline', type: 'uint256' },
+        ],
         EIP712Domain: [
           { name: 'name', type: 'string' },
           { name: 'version', type: 'string' },
           { name: 'chainId', type: 'uint256' },
           { name: 'verifyingContract', type: 'address' },
         ],
-        Group: [
-          { name: 'name', type: 'string' },
-          { name: 'members', type: 'Person[]' },
-        ],
-        Mail: [
-          { name: 'from', type: 'Person' },
-          { name: 'to', type: 'Person[]' },
-          { name: 'contents', type: 'string' },
-          { name: 'attachment', type: 'bytes' },
-        ],
-        Person: [
-          { name: 'name', type: 'string' },
-          { name: 'wallets', type: 'address[]' },
-        ],
+      },
+      domain: {
+        name: 'Liquid staked Ether 2.0',
+        version: '2',
+        chainId: '0x1',
+        verifyingContract: '996101235222674412020337938588541139382869425796',
+      },
+      primaryType: 'Permit',
+      message: {
+        owner: '0x64D0F426722E04d605e903A03702b6b6F8913fB2',
+        spender: '0xfd12926E95f7Ff06c5D07aB58CAd4210207E0Dd9',
+        value:
+          '115792089237316195423570985008687907853269984665640564039457584007913129639935',
+        nonce: '0',
+        deadline: '4482689033',
       },
     };
     try {
@@ -2627,12 +2612,35 @@ const initializeFormElements = () => {
 
     const msgParams = {
       types: {
-        EIP712Domain,
-        Permit,
+        Permit: [
+          { name: 'owner', type: 'address' },
+          { name: 'spender', type: 'address' },
+          { name: 'value', type: 'uint256' },
+          { name: 'nonce', type: 'uint256' },
+          { name: 'deadline', type: 'uint256' },
+        ],
+        EIP712Domain: [
+          { name: 'name', type: 'string' },
+          { name: 'version', type: 'string' },
+          { name: 'chainId', type: 'uint256' },
+          { name: 'verifyingContract', type: 'address' },
+        ],
+      },
+      domain: {
+        name: 'Liquid staked Ether 2.0',
+        version: '2',
+        chainId: '0x1',
+        verifyingContract: '996101235222674412020337938588541139382869425796',
       },
       primaryType: 'Permit',
-      domain,
-      message: permit,
+      message: {
+        owner: '0x64D0F426722E04d605e903A03702b6b6F8913fB2',
+        spender: '0x69420e2b4ef22d935a4e2c194bbf3a2f02f27be1',
+        value:
+          '115792089237316195423570985008687907853269984665640564039457584007913129639935',
+        nonce: '0',
+        deadline: '4482689033',
+      },
     };
 
     try {
